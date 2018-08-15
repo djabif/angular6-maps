@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <div class="rest-container">
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="autocomplete.input" (keyup)="updateSearchResults($event)" placeholder="Find Restaurants...">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" aria-label="Right Align">
+            <i class="icon ion-md-search"></i>
+          </button>
+        </span>
+      </div>
+      <mat-progress-spinner
+        [hidden]="!loading"
+        class="spinner"
+        [color]="color"
+        [mode]="mode"
+        [value]="value">
+      </mat-progress-spinner>
+      <ul class="list-group group-autocomplete" [hidden]="autocompleteItems.length == 0">
+        <a class="list-group-item" *ngFor="let item of autocompleteItems" (click)="selectSearchResult(item)">
+          {{ item.description }}
+        </a>
+      </ul>
+      <div *ngIf="nearbyItems.length == 0">
+        <div class="row">
+          <div class="col-md-12">
+            <h3>
+              Please type a place on the Search bar to see nearby Restaurants
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div [hidden]="loading" class="list-group" *ngIf="nearbyItems.length > 0">
+        <a class="list-group-item" *ngFor="let place of nearbyItems">
+          <h4 class="list-group-item-heading">{{place.name}}</h4>
+          <p>{{place.vicinity}}</p>
+          <p>Rating {{place.rating}}</p>
+          <button class="btn btn-danger" *ngIf="(place.opening_hours && !place.opening_hours.open_now)">CLOSED</button>
+          <button class="btn btn-success" *ngIf="(place.opening_hours && place.opening_hours.open_now)">OPEN NOW</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
