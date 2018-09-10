@@ -9,6 +9,6 @@ export const rootRouterConfig: Routes = [
   children: [
     { path: '', component: MapComponent },
     { path: 'map', component: MapComponent },
-    { path: 'restaurant', component: RestaurantComponent }
+    { path: 'restaurants', component: RestaurantComponent }
   ]},
 ];

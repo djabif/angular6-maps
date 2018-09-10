@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
         label: 'Map'
       },
       {
-        path:'/menu/restaurant',
+        path:'/menu/restaurants',
         label: 'Places'
       }
     ]
