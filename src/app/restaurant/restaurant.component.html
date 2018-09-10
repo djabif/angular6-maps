@@ -1,43 +1,50 @@
-<div class="row">
-  <div class="col-md-8 offset-md-2">
-    <div class="rest-container">
-      <div class="input-group">
-        <input type="text" class="form-control" [(ngModel)]="autocomplete.input" (keyup)="updateSearchResults($event)" placeholder="Find Restaurants...">
-        <span class="input-group-btn">
-          <button class="btn btn-default" type="button" aria-label="Right Align">
-            <i class="icon ion-md-search"></i>
-          </button>
-        </span>
+<div class="row actions-bar">
+  <div class="col-md-6 offset-md-1">
+    <div class="input-group">
+      <input type="text" class="form-control" [(ngModel)]="autocomplete.input" (keyup)="updateSearchResults($event)" placeholder="Search for a place to see nearby restaurants...">
+      <div class="input-group-append">
+        <span class="input-group-text"><i class="icon ion-md-search"></i></span>
       </div>
-      <mat-progress-spinner
-        [hidden]="!loading"
-        class="spinner"
-        [color]="color"
-        [mode]="mode"
-        [value]="value">
-      </mat-progress-spinner>
-      <ul class="list-group group-autocomplete" [hidden]="autocompleteItems.length == 0">
-        <a class="list-group-item" *ngFor="let item of autocompleteItems" (click)="selectSearchResult(item)">
+    </div>
+    <div class="input-group">
+      <ul class="search-results list-group" [hidden]="autocompleteItems.length == 0">
+        <a class="search-item list-group-item" *ngFor="let item of autocompleteItems" (click)="selectSearchResult(item)">
           {{ item.description }}
         </a>
       </ul>
-      <div *ngIf="nearbyItems.length == 0">
-        <div class="row">
-          <div class="col-md-12">
-            <h3>
-              Please type a place on the Search bar to see nearby Restaurants
-            </h3>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 offset-md-1">
+    <div class="results-container">
+      <mat-progress-spinner
+        [hidden]="!loading"
+        class="spinner"
+        color="primary"
+        mode="indeterminate">
+      </mat-progress-spinner>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div [hidden]="loading" class="places-results list-group" *ngIf="nearbyItems.length > 0">
+      <div class="card" *ngFor="let place of nearbyItems">
+        <div class="image-wrapper">
+          <div class="image-outer">
+            <img class="card-img-top" *ngIf="place.photos" [src]="place.photos[0].getUrl()">
+            <img class="card-img-top" *ngIf="!place.photos" src="https://via.placeholder.com/300x200">
           </div>
         </div>
-      </div>
-      <div [hidden]="loading" class="list-group" *ngIf="nearbyItems.length > 0">
-        <a class="list-group-item" *ngFor="let place of nearbyItems">
-          <h4 class="list-group-item-heading">{{place.name}}</h4>
-          <p>{{place.vicinity}}</p>
-          <p>Rating {{place.rating}}</p>
-          <button class="btn btn-danger" *ngIf="(place.opening_hours && !place.opening_hours.open_now)">CLOSED</button>
-          <button class="btn btn-success" *ngIf="(place.opening_hours && place.opening_hours.open_now)">OPEN NOW</button>
-        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{place.name}}</h5>
+          <p class="card-text">{{place.vicinity}}</p>
+          <p class="card-text">Rating {{place.rating}}</p>
+          <span class="badge badge-success" *ngIf="(place.opening_hours && place.opening_hours.open_now)">Open Now</span>
+          <span class="badge badge-danger" *ngIf="(place.opening_hours && !place.opening_hours.open_now)">Closed Now</span>
+        </div>
       </div>
     </div>
   </div>

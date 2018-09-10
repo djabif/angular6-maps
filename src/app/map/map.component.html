@@ -1,33 +1,37 @@
-<div class="row">
-  <div class="col-md-8 offset-md-2">
-    <div class="map-container">
-      <div class="input-group">
-        <input type="text" class="form-control"  [(ngModel)]="autocomplete.input" (keyup)="updateSearchResults($event)" placeholder="Search...">
-        <span class="input-group-btn">
-          <button class="btn btn-default" type="button" aria-label="Right Align">
-            <i class="icon ion-md-search"></i>
-          </button>
-        </span>
+
+<div class="row actions-bar">
+  <div class="col-md-6 offset-md-1">
+    <div class="input-group">
+      <input type="text" class="form-control" [(ngModel)]="autocomplete.input" (keyup)="updateSearchResults($event)" placeholder="Search...">
+      <div class="input-group-append">
+        <span class="input-group-text"> <i class="icon ion-md-search"></i></span>
       </div>
-      <mat-progress-spinner
-        [hidden]="!loading"
-        class="spinner"
-        [color]="color"
-        [mode]="mode"
-        [value]="value">
-      </mat-progress-spinner>
+    </div>
+    <div class="input-group">
       <ul class="list-group" [hidden]="autocompleteItems.length == 0">
-        <a class="list-group-item" *ngFor="let item of autocompleteItems" (click)="selectSearchResult(item)">
+        <a class="list-group-item search-item" *ngFor="let item of autocompleteItems" (click)="selectSearchResult(item)">
           {{ item.description }}
         </a>
       </ul>
-      <div [hidden]="loading" id='map'></div>
     </div>
+  </div>
+  <div class="col-md-4">
+    <button type="button" (click)="tryGeolocation()" class="btn btn-outline-secondary">
+      <i class="icon ion-md-pin"></i>  Try Geolocation
+    </button>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-8 offset-md-2">
-    <button type="button" (click)="tryGeolocation()" class="btn btn-primary btn-lg btn-block">Try Geolocation</button>
+  <div class="col-xs-12 col-md-12 col-log-12">
+    <div class="map-container">
+      <mat-progress-spinner
+        [hidden]="!loading"
+        class="spinner"
+        color="primary"
+        mode="indeterminate">
+      </mat-progress-spinner>
+      <div [hidden]="loading" id='map'></div>
+    </div>
   </div>
 </div>

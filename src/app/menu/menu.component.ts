@@ -19,7 +19,7 @@ export class MenuComponent implements OnInit {
       },
       {
         path:'/menu/restaurant',
-        label: 'Restaurant'
+        label: 'Places'
       }
     ]
 

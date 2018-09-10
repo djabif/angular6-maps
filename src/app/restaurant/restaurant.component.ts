@@ -15,8 +15,6 @@ export class RestaurantComponent implements OnInit {
   geocoder: any
   autocompleteItems: any;
   nearbyItems: any = new Array<any>();
-  color = 'primary';
-  mode = 'indeterminate';
   loading = false;
 
   constructor(

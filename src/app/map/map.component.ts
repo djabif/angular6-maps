@@ -10,8 +10,6 @@ import { } from '@types/googlemaps';
 export class MapComponent implements OnInit {
 
   map: any;
-  color = 'primary';
-  mode = 'indeterminate';
   markers: any;
   loading = true;
   autocomplete: any;
@@ -43,9 +41,10 @@ export class MapComponent implements OnInit {
 
   tryGeolocation(){
     this.loading = true;
+
     if (navigator.geolocation) {
       this.clearMarkers();//remove previous markers
-      navigator.geolocation.getCurrentPosition(position =>{
+      navigator.geolocation.getCurrentPosition(position => {
         var pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
@@ -59,6 +58,7 @@ export class MapComponent implements OnInit {
         this.map.setCenter(pos);
         this.loading = false;
      }, err => {
+
        console.log("Error at center")
        this.loading = false;
      })
@@ -93,10 +93,6 @@ export class MapComponent implements OnInit {
 
     this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
       if(status === 'OK' && results[0]){
-        // let position = {
-        //     lat: results[0].geometry.location.lat,
-        //     lng: results[0].geometry.location.lng
-        // };
         let marker = new google.maps.Marker({
           position: results[0].geometry.location,
           map: this.map
